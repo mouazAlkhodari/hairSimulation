@@ -127,10 +127,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Hair.cpp" />
+    <ClCompile Include="src\IndexBuffer.cpp" />
+    <ClCompile Include="src\renderer.cpp" />
     <ClCompile Include="res\glm\detail\glm.cpp" />
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\VertextBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Hair.h" />
+    <ClInclude Include="src\IndexBuffer.h" />
+    <ClInclude Include="src\renderer.h" />
     <ClInclude Include="res\glm\common.hpp" />
     <ClInclude Include="res\glm\detail\compute_common.hpp" />
     <ClInclude Include="res\glm\detail\compute_vector_relational.hpp" />
@@ -371,6 +378,9 @@
     <ClInclude Include="res\glm\vec3.hpp" />
     <ClInclude Include="res\glm\vec4.hpp" />
     <ClInclude Include="res\glm\vector_relational.hpp" />
+    <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\VertextBuffer.h" />
+    <ClInclude Include="src\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\glm\detail\func_common.inl" />
@@ -504,6 +514,8 @@
     <None Include="res\glm\gtx\vector_angle.inl" />
     <None Include="res\glm\gtx\vector_query.inl" />
     <None Include="res\glm\gtx\wrap.inl" />
+    <None Include="src\Shaders\fragmentShader.GLSL" />
+    <None Include="src\Shaders\vertexShader.GLSL" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
