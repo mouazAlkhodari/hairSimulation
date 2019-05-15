@@ -1,8 +1,8 @@
-
 # Created by https://www.gitignore.io/api/c++,cmake,visualstudio,visualstudiocode,openframeworks+visualstudio
 # Edit at https://www.gitignore.io/?templates=c++,cmake,visualstudio,visualstudiocode,openframeworks+visualstudio
 
 ### C++ ###
+/Debug
 # Prerequisites
 *.d
 
