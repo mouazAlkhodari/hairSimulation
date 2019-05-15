@@ -14,17 +14,17 @@ class Spring;
 
 // *********** config **************** //
 const int SPRING_NUM_JUST = 10;
-const float SPRING_K_JUST = 7.0f;
-const float SPRING_LENGTH_JUST = 0.05f;
-const float MINLEN = 0.02f;
-const float MAXLEN = 4.0f;
+const float SPRING_K_JUST = 60.0f;
+const float SPRING_LENGTH_JUST = 0.04f;
+const float MINLEN = 0.2f;
+const float MAXLEN = 4.5f;
 const int GUIDEHAIRNUM_JUST = 200;
 
-const float PARTICLE_MASS_JUST = 2.0f;
-const float GRAVITY_JUST = 7.0f;
-const float DAMPING_K_JUST = 1.0f;
+const float PARTICLE_MASS_JUST = 0.2f;
+const float GRAVITY_JUST = 6.8f;
+const float DAMPING_K_JUST = 1.4f;
 //need to be in main 
-const float FPS = 6;
+const float FPS = 30;
 
 class Hair {
 public:
@@ -84,17 +84,19 @@ public:
 
 	vec3 *m_last;   // last point
 	vec3 *m_x	;   // this point
-	vec3 *m_next; // next point
+	vec3 *m_next;   // next point
+	vec3 *m_vNext;  // next velocity
+	vec3 *m_vLast;  // last velocity
 
 	vec3 m_velocity;
 	float gravity = GRAVITY_JUST;
 	vec3 m_root_postion;
 	float mass;
 	
-// dt (we can compute it
+// dt (we can compute it)
 	float m_delt;
 
-	float head_k = 2.3f*SPRING_K_JUST;
+	float head_k = 2.3f * SPRING_K_JUST;
 	float k = SPRING_K_JUST;
 
 };

@@ -67,26 +67,30 @@ Hairline::Hairline(vec3 root_position){
 	this->m_Springs = new vector<Spring*>;
 	vec3 last, cur, next;
 //	vec3 normal = normalize(root_position);
-	vec3 normal = vec3(-1, 0, 0);
+	vec3 normal = vec3(1, 0, 0);
+	vector<vec3*> velocitys;
 	for (int i = 0; i < SPRING_NUM_JUST; i++){
 		cur = root_position + i * SPRING_LENGTH_JUST * normal;
 		cout << cur << endl;
+		velocitys.push_back(vec3(0,0,0));
 		this->m_positions.push_back(cur);
 	}
+	velocitys.push_back(vec3(0, 0, 0));
 	this->m_positions.push_back(cur + SPRING_LENGTH_JUST * normal);
 
 	Spring * spring;
 	for (int i = 0; i < SPRING_NUM_JUST; i++)
 	{
 		if (i == 0){
-			spring = new Spring(NULL, &this->m_positions[i], &this->m_positions[i + 1], root_position);
+			spring = new Spring(NULL, &this->m_positions[i], &this->m_positions[i + 1], root_position,NULL,velocitys[i],velocitys[i+1]);
 		}
 		else{
-			spring = new Spring(&this->m_positions[i - 1], &this->m_positions[i], &this->m_positions[i + 1], root_position);
+			spring = new Spring(&this->m_positions[i - 1], &this->m_positions[i], &this->m_positions[i + 1], root_position,velocitys[i - 1],velocitys[i],velocitys[i + 1]);
 		}
 		this->m_Springs->push_back(spring);
 	}
 	this->m_Springs->push_back(new Spring(&this->m_positions[SPRING_NUM_JUST - 1], &this->m_positions[SPRING_NUM_JUST], NULL, root_position));
+	this->m_Springs->push_back(new Spring(velocitys[SPRING_NUM_JUST - 1], velocitys[SPRING_NUM_JUST], NULL, root_position));
 	this->_initBufferData();
 	this->UpdateRenderData();
 }
@@ -187,10 +191,6 @@ void Spring::Update(){
     deltal		= length - SPRING_LENGTH_JUST;
     scale		= this->k * deltal;
 
-	// TODO : test it 
-    if(std::abs(deltal) >= 0.1f * SPRING_LENGTH_JUST){
-        scale *= 10;
-    }
 
 	force_SpringLast = direction * scale;
 
@@ -202,19 +202,12 @@ void Spring::Update(){
 		direction = normalize(delta);
 		deltal = length - SPRING_LENGTH_JUST ;
 		scale = this->k * deltal;
-		// TODO : test it
-        /*if(std::abs(deltal) >= 0.1f * SPRING_LENGTH_JUST){
-            scale *= 10;
-        }*/
         force_SpringNext = direction * scale;
     }
     // force of damping
-    force_damping = -1 * (this->m_velocity * DAMPING_K_JUST);
-	// TODO : need to test it
-    /*if( glm::length(this->m_velocity) > 15){
-        force_damping *= 10;
-    }*/
-    // force of gravity
+    force_damping = -1 * ((this->m_velocity) * DAMPING_K_JUST);
+
+	// force of gravity
     force_gravity = this->mass * this->gravity * vec3(0,-1,0);
 
     force = force_SpringLast + force_SpringNext + force_damping+ force_gravity;

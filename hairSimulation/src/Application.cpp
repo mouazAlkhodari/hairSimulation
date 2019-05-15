@@ -15,6 +15,7 @@
 
 using namespace std;
 using namespace glm;
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 int main(void)
 {
 	GLFWwindow* window;
@@ -28,7 +29,7 @@ int main(void)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(620, 540, "Hello World", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -37,14 +38,17 @@ int main(void)
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
 
-	glfwSwapInterval(6);
+	glfwSwapInterval(2);
 	if (glewInit() != GLEW_OK) {
 		cout << "Error" << endl;
 	}
 	cout << glGetString(GL_VERSION) << endl;
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	{
 		Shader shader("src/Shaders/vertexShader.GLSL", "src/Shaders/fragmentShader.GLSL");
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		
 		/*float vertices1[] = {
 			-0.5f,  0.5f,
@@ -121,6 +125,11 @@ int main(void)
 	}
 	glfwTerminate();
 	return 0;
+}
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+	glViewport(0, 0, width, height);
+	std::cout << "width: " << width << std::endl;
+	std::cout << "height: " << height << std::endl;
 }
 /*
 
